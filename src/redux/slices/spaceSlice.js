@@ -1,18 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-export const fetchBooks = createAsyncThunk(
-    'book/fetchBooks',
+export const fetchSpace = createAsyncThunk(
+    'space/fetchSpace',
     async () => {
       const response = await fetch('https://api.spacexdata.com/v3/launches').then(res=> res.json())
-      return response.data
+      return response
     }
   )
 
 const initialState = {
-  value: 0,
+  data:[]
 }
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const spaceSlice = createSlice({
+  name: 'space',
   initialState,
   reducers: {
     increment: (state) => {
@@ -30,17 +30,17 @@ export const counterSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchBooks.fulfilled, (state, action) => {
-      state.discover = action.payload;
+    builder.addCase(fetchSpace.fulfilled, (state, action) => {
+      state.data=action.payload;
       state.status = 'success'
     })
-    builder.addCase(fetchBooks.pending, (state, action) => {
+    builder.addCase(fetchSpace.pending, (state, action) => {
         state.status = 'pending';
     })
 },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export const { increment, decrement, incrementByAmount } = spaceSlice.actions
 
-export default counterSlice.reducer
+export default spaceSlice.reducer
