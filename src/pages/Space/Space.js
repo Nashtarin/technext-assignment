@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
+import { Carousel } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpace} from '../../redux/slices/spaceSlice';
+import i4 from '../../images/i4.jpg'
+import i3 from '../../images/i3.jpg'
+import i2 from '../../images/i2.jpg'
+import i1 from '../../images/i1.jpg'
 
 const Space = () => {
     const data=useSelector((state)=>state.spaces.data)
@@ -11,9 +16,42 @@ const Space = () => {
 
     },[])
     return (
-        <div>
-            <h1>It's space</h1>
-        </div>
+       <>
+       <div>
+       <Carousel>
+  <Carousel.Item interval={1000}>
+    <img
+    style={{height:"300px"}}
+      className="w-100 img-thumbnail"
+      src={i1}
+      alt="First slide"
+    />
+   
+  </Carousel.Item>
+  <Carousel.Item interval={500}>
+    <img
+    style={{height:"300px"}}
+      className="w-100 img-thumbnail"
+      src={i2}
+      alt="Second slide"
+    />
+
+  </Carousel.Item>
+  <Carousel.Item>
+    <img
+     style={{height:"300px"}} className="w-100 img-thumbnail"
+      src={i3}
+      alt="Third slide"
+    />
+  
+  </Carousel.Item>
+
+</Carousel>
+       </div>
+       <div>
+           
+       </div>
+       </>
     );
 };
 
