@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Carousel, Spinner } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Carousel, FormControl, InputGroup, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpace} from '../../redux/slices/spaceSlice';
 import i4 from '../../images/i4.jpg'
@@ -10,13 +10,28 @@ import SingleCard from './SingleCard/SingleCard';
 
 const Space = () => {
     const data=useSelector((state)=>state.spaces.data)
-    console.log(data)
+   //  console.log(data)
     
     const dispatch=useDispatch()
     useEffect(()=>{
        dispatch(fetchSpace())
 
     },[])
+    const [input,setInput]=useState('')
+    const [searchbyRocket,setSearchbyRocket]=useState(false)
+    const [searchresult,setSearchResult]=useState([])
+    const handleInput=e=>{
+       const rocket=e.target.value
+      //  console.log(rocket)
+       setInput(rocket)
+    }
+    console.log(input)
+    const search=()=>{
+       const searchresult=data.filter(result=>result.rocket.rocket_name.toLowerCase()===input.toLowerCase())
+       setSearchResult(searchresult)
+       setSearchbyRocket(true)
+
+    }
     return (
        <>
        <div>
@@ -50,11 +65,26 @@ const Space = () => {
 
 </Carousel>
        </div>
+       <div>
+          <h4 className="text-primary mt-3">Search By Rocket Name</h4>
+          <InputGroup className="mb-3 w-75 mx-auto">
+    <FormControl
+      placeholder="Search by Rocket Name"
+      aria-label="Recipient's username"
+      aria-describedby="basic-addon2"
+      onBlur={handleInput}
+    />
+    <Button onClick={search} variant="primary" id="button-addon2">
+      Search
+    </Button>
+  </InputGroup>
+       </div>
        <div className="row row-cols-1 row-cols-md-3 g-4 mx-5 my-3">
        
 
 
-{data.length === 0 ? <Spinner style={{ marginLeft: "500px" }} animation="border" variant="primary" /> : data.map(space => <SingleCard key={space.flight_number}
+{searchbyRocket?searchresult.map(space => <SingleCard 
+    spaceData={space}></SingleCard>):data.map(space => <SingleCard 
     spaceData={space}></SingleCard>)}
 
 

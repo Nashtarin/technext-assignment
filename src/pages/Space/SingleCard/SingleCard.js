@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SingleCard = ({spaceData}) => {
-    console.log(spaceData)
+    // console.log(spaceData)
     return (
         <div className="col">
 
